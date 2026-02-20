@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Wyszukiwarka Certyfikatów</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input, select {
+    padding: 8px;
+    margin: 10px 10px 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 8px 12px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    display: none; /* ukryta na start */
+}
+
+th, td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+<div style="text-align:center; margin-bottom:20px;">
+    <img src="logo.png" alt="Logo" style="max-width:300px; height:auto;">
+</div>
+
+<h1>System Wyszukiwania Certyfikatów</h1>
+
+<div class="container">
+
+<label>Znaki rozpoznawcze:</label>
+<input type="text" id="searchZnak" placeholder="np. SP-LVG">
+
+<label>Rodzaj certyfikatu:</label>
+<select id="searchRodzaj">
+    <option value="">Wybierz</option>
+    <option value="ARC">ARC</option>
+    <option value="CofA">CofA</option>
+    <option value="NC">NC</option>
+    <option value="ExCofA">ExCofA</option>
+</select>
+
+<button onclick="filterTable()">Szukaj</button>
+
+<table id="dataTable">
+<thead>
+<tr>
+<th>Rodzaj</th>
+<th>Status</th>
+<th>Znak</th>
+<th>Nr seryjny</th>
+<th>Nr rejestru</th>
+<th>Nazwa typu</th>
+<th>Typ</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>ARC</td><td>Aktywne</td><td>SP-LVG</td><td>43309</td><td>5618</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>CofA</td><td>Cofnięte</td><td>SP-LVD</td><td>64069</td><td>5115</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>NC</td><td>Dokument niewydany</td><td>SP-LVB</td><td>64068</td><td>5076</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ExCofA</td><td>W realizacji</td><td>SP-LVC</td><td>43347</td><td>5114</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ARC</td><td>Ważne</td><td>SP-LVA</td><td>64067</td><td>5072</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>CofA</td><td>Zabezpieczony</td><td>SP-EXA</td><td>64295</td><td>5161</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>NC</td><td>Zabrane</td><td>SP-EXB</td><td>64296</td><td>5183</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ExCofA</td><td>Zawieszone</td><td>SP-LVL</td><td>43331</td><td>5611</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ARC</td><td>Aktywne</td><td>SP-EXE</td><td>60388</td><td>5650</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>CofA</td><td>Cofnięte</td><td>SP-EXF</td><td>61862</td><td>5651</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>NC</td><td>Dokument niewydany</td><td>SP-EXC</td><td>44624</td><td>5660</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ExCofA</td><td>W realizacji</td><td>SP-LVT</td><td>43974</td><td>5824</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ARC</td><td>Ważne</td><td>SP-LVQ</td><td>43975</td><td>5826</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>CofA</td><td>Zabezpieczony</td><td>SP-LVM</td><td>65187</td><td>5606</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>NC</td><td>Zabrane</td><td>SP-LVK</td><td>43325</td><td>5621</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ExCofA</td><td>Zawieszone</td><td>SP-LVH</td><td>43306</td><td>5629</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ARC</td><td>Aktywne</td><td>SP-LVI</td><td>43326</td><td>5625</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>CofA</td><td>Cofnięte</td><td>SP-EXH</td><td>64509</td><td>5776</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>NC</td><td>Dokument niewydany</td><td>SP-EXI</td><td>60224</td><td>5772</td><td>BOEING</td><td>737-8</td></tr>
+<tr><td>ExCofA</td><td>W realizacji</td><td>SP-LVN</td><td>66355</td><td>5758</td><td>BOEING</td><td>737-8</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<script>
+function filterTable() {
+    let inputZnak = document.getElementById("searchZnak").value.trim().toUpperCase();
+    let inputRodzaj = document.getElementById("searchRodzaj").value;
+    let table = document.getElementById("dataTable");
+    let tr = table.getElementsByTagName("tr");
+    let found = false;
+
+    if (inputZnak === "" && inputRodzaj === "") {
+        table.style.display = "none";
+        return;
+    }
+
+    table.style.display = "table";
+
+    for (let i = 1; i < tr.length; i++) {
+        let tdRodzaj = tr[i].getElementsByTagName("td")[0];
+        let tdZnak = tr[i].getElementsByTagName("td")[2];
+
+        let matchZnak = tdZnak.textContent.toUpperCase().includes(inputZnak);
+        let matchRodzaj = inputRodzaj === "" || tdRodzaj.textContent === inputRodzaj;
+
+        if (matchZnak && matchRodzaj) {
+            tr[i].style.display = "";
+            found = true;
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+
+    if (!found) {
+        table.style.display = "none";
+        alert("Brak wyników.");
+    }
+}
+</script>
+
+</body>
+</html>
